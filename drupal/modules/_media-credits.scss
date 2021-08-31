@@ -1,0 +1,40 @@
+// MASQUE  les crédits par défaut
+.field--name-field-media-credits {
+  display: none;
+}
+
+@mixin affiche-credits($layout: static, $align: inherit ) {
+
+  .field--name-field-media-credits {
+    display: block;
+    font-size: 80%;
+    text-align: $align;
+  }
+
+  @if $layout == static {
+    .field--name-field-media-credits {
+      padding: s(2) s(2) 0 s(2);
+      color:var(--credits-color, inherit);
+    }
+  }
+
+  @if $layout == absolute {
+    
+    .field--name-field-image, 
+    &.field--name-field-image {
+      position: relative; // conteneur
+    }
+
+    .field--name-field-media-credits {
+      text-align: $align;
+      display: block;
+      color:#fff;
+      position:absolute;
+      bottom:var(--gutter-x, 1rem);
+      left:var(--gutter-x, 1rem);
+      right:var(--gutter-x, 1rem);
+    }
+
+  }
+
+}

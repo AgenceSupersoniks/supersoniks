@@ -1,0 +1,88 @@
+$enable-weform-default: true !default;
+$form-max-width: 80ch !default;
+$form-grid-template-columns: var(--form-grid-template-colums, 1fr 1fr )  !default;
+$form-grid-gap: var(--gutter-x) !default;
+$form-bp: sm !default;
+
+@mixin webform-default($template-columns: $form-grid-template-columns, $gap: $form-grid-gap, $max-width: $form-max-width, $bp: $form-bp) {
+  margin-bottom :4rem;
+  max-width: $max-width;
+
+  // Layout en grid pour fieldset
+  // et formulaire sans fieldset
+  &, 
+  & .fieldset-wrapper{
+    display: grid;
+    grid-gap: $gap;
+
+    @include media-breakpoint-up($form-bp){
+      grid-template-columns: $template-columns ;
+    }
+
+  }
+
+  // Ignore grid layout pour les wrapper ajax
+  // TODO : verifier usage dans drupal 9
+  &, 
+    fieldset div:not([class]){
+    div[id*=ajax-wrapper] {
+        display:contents;
+        grid-column-end: span 2; // support display contents
+    }
+  }
+
+  // Elements sur deux colonnes
+  & , 
+  & fieldset{
+    fieldset,
+    [class*=form-actions] ,
+    [class*=form-type-multiple-file] ,
+    [class*=form-type-file] ,
+    [class*=form-type-markup] ,
+    [class*=form-type-select] ,
+    [class*=form-type-textarea] ,
+    [class*=form-type-checkboxes] ,
+    [class*=form-type-radios] {
+      grid-column-end: span 2; 
+    }
+  }
+  
+  [class*="form-item-rgpd"] {
+    grid-column-end: span 2; 
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  .rgpd-mentions {
+    grid-column-end: span 2; 
+  }
+
+  .captcha  {
+    grid-column-start:1; 
+    font-size: .8rem;
+    summary {
+      font-weight: bold;
+      line-height: $line-height-sm;
+    }
+    .form-item-captcha-response {
+      font-size: 1rem;
+      margin-top: .4rem;
+    }
+    .description {
+      margin-top: .1rem;
+      font-size: .8rem;
+      line-height: $line-height-sm;
+    }
+  }
+
+}
+
+// APPLIQUE les styles par défaut à tous les webforms
+@if $enable-weform-default{
+  .ssks-submission-form,
+  .webform-submission-form {
+    @include webform-default();
+  }
+}

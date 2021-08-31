@@ -1,0 +1,3 @@
+@function rem($pxValue, $fsBase) {
+    @return #{stripUnit($pxValue) / stripUnit($fsBase)}rem;
+}

@@ -1,0 +1,70 @@
+/*  ------------------------------------------------
+::
+::  Lien souligné
+::
+--------------------------------------------------*/
+@mixin l-hover-start($color: currentColor, $height: 0.08em) {
+    display: inline;
+    background-image: linear-gradient(0deg, $color $height, transparent $height);
+    background-repeat: no-repeat;
+    background-size: 0 100%;
+    transition: background-size .2s;
+}
+
+@mixin l-hover-end() {
+    background-size: 100% 100%;
+}
+
+// l-hover as mixin
+@mixin l-hover($color: currentColor, $height: 0.08em) {
+    @include l-hover-start($color, $height);
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.active,
+    a:hover &,
+    a:focus &,
+    a:active &,
+    a.active & {
+        @include l-hover-end();
+    }
+}
+
+@mixin l-hover-invert-start($color: currentColor, $height: 0.08em ) {
+    @include l-hover-start($color, $height);
+    background-size: 100% 100%;
+}
+
+@mixin l-hover-invert-end() {
+    background-size: 0 100%;
+}
+
+// l-hover-invert as mixin
+@mixin l-hover-invert($color: currentColor, $height: 0.08em) {
+    @include l-hover-invert-start($color, $height);
+    
+    &:hover,
+    &:focus,
+    &:active,
+    &.active,
+    a:hover &,
+    a:focus &,
+    a:active &,
+    a.active & {
+        @include l-hover-invert-end();
+    }
+}
+
+
+// l-hover as class
+.l-hover {
+    @include l-hover();
+}
+
+// l-hover-invert as class
+.l-hover-invert {
+    @include l-hover-invert();
+}
+
+

@@ -1,0 +1,12 @@
+@mixin object-fit($fit: cover, $position: 50% 50%) {
+  object-fit: $fit;
+  // font-family: "object-fit: #{$fit}; object-position: #{$position};";
+  object-position: $position;
+  width: 100%;
+  height: 100%;
+
+  .is-ie & {
+      width: 100% !important;
+      height: 100% !important;
+  }
+}

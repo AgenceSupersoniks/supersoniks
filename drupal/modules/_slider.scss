@@ -1,0 +1,48 @@
+// SLIDER
+.views-container--slider {
+  position: relative;
+  overflow: hidden;
+  list-style: none;
+  padding: 0;
+  z-index: 1;
+}
+
+.views-results--slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  transition-property: transform;
+  box-sizing: content-box;
+  
+  .views-row {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition-property: transform;
+  }
+}
+
+
+// DOTS
+.ssks-slider-dot {
+  --slider-dot-size: 10px;
+  --slider-dot-border-width: 1px;
+  width: var(--slider-dot-size);
+  height: var(--slider-dot-size);
+  display: inline-block;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 var(--slider-dot-border-width) $primary;
+  transition: .2s;
+  
+  @include media-breakpoint-up(xxl){
+    --slider-dot-size: 14px;
+    --slider-dot-border-width: 2px;
+  }
+}
+
+.ssks-slider-dot-active {
+  box-shadow: inset 0 0 0 var(--slider-dot-size) $primary;
+}

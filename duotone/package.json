@@ -1,0 +1,21 @@
+{
+  "name": "@supersoniks/duotone",
+  "version": "1.0.4",
+  "description": "Generate a duotone filter svg ",
+  "main": "Duotone.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AgenceSupersoniks/supersoniks.git",
+    "directory": "duotone"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ssks",
+    "supersoniks",
+    "duotone"
+  ],
+  "author": "",
+  "license": "ISC"
+}

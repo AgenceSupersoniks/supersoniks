@@ -1,0 +1,57 @@
+
+:root{
+  --container-gutter-x-neg: calc(-1 * var(--container-gutter-x) ) ;
+}
+
+
+.container-fluid {
+  --#{$variable-prefix}gutter-x: var(--container-gutter-x);
+}
+
+
+@mixin hors-container($direction : '') {
+
+  @if ($direction == '' ) {
+    margin-left: var( --container-gutter-x-neg );
+    margin-right: var( --container-gutter-x-neg);
+  }
+
+  @if ($direction == "l") {
+    margin-left: var( --container-gutter-x-neg );
+  }
+
+  @if ($direction == "r") {
+    margin-right: var( --container-gutter-x-neg );
+  }
+}
+
+// Donne les padding du container à un elt
+@mixin container-px(){
+    padding-left : var(--container-gutter-x) ;
+    padding-right : var(--container-gutter-x) ;
+}
+
+
+// INIT Hors container en class
+.hors-container {
+  @include hors-container();
+}
+
+.hors-container-l {
+  @include hors-container("l");
+}
+.hors-container-r {
+  @include hors-container("r");
+}
+
+
+// padding du conteneur sur les blocs par défaut
+// Si en dehors de bootstrap container
+@mixin block-px  {
+  @include container-px();
+  
+  .container &,
+  .container-fluid &{
+    padding-inline:unset;
+  }
+}

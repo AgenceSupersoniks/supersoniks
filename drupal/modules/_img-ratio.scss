@@ -1,0 +1,34 @@
+
+/*  ------------------------------------------------
+::
+::  Ratio img
+::
+--------------------------------------------------*/
+$img-ratios: ('auto', '11x4', '16x9', '1x1', '3x2', '4x3', 'a4') !default;
+
+// CACHE toutes les pictures,
+// Et affiche le ratio demandé
+@mixin affiche-img-ratio($ratio) {
+    picture[class*="picture-ratio-"] {
+        display: none;
+    }
+
+    picture.picture-ratio-#{$ratio} {
+        display: block;
+    }   
+}
+
+// Affiche ratio en class
+@each $ratio in $img-ratios {
+    .affiche-img-ratio-#{$ratio} {
+        @include affiche-img-ratio($ratio);
+    }
+}
+
+// Fix pour object-fit-cover
+picture[class*="picture-ratio-"] {
+    height: 100%; 
+}
+
+// Affiche img-par défaut en AUTO
+@include affiche-img-ratio('auto');

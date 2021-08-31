@@ -1,0 +1,27 @@
+$debug: false !default;
+
+@if $debug {
+	
+	// Affiche la media query en bas de l'écran
+	body {
+		&:before {
+			content: "Mode Debug";
+			position: fixed;
+			bottom: 0;
+			right: 0;
+			background-color: $danger;
+			padding: s(1) s(2);
+			font-size: var(--fs-d3);
+			text-transform: uppercase;
+			font-weight: bold;
+			letter-spacing: .05;
+			
+			@each $breakpoint, $value in $grid-breakpoints {
+				@include media-breakpoint-up($breakpoint) {
+					content: "Screen #{$breakpoint} : #{$value}";
+				}
+			}
+		}
+	}
+	
+}

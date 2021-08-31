@@ -1,0 +1,50 @@
+// PARAMETRES PAR DEFAUT
+$lazy-animation-opacity: true !default;
+
+$lazy-placeholder-bg: var(--bs-light, #f5f5f5) !default;
+$lazy-opacity-loaded: 1 !default;
+$lazy-animation-duration: var(--lazy-animation-duration,  0.2s ) !default;
+
+
+/*  ------------------------------------------------
+::
+::  Lazyload fondu
+::
+--------------------------------------------------*/
+@mixin lazyinit(){
+  opacity: 0;
+  transition: opacity $lazy-animation-duration;
+}
+
+@mixin lazyend(){
+  opacity: $lazy-opacity-loaded;
+  opacity: var(--lazy-opacity-loaded, #{$lazy-opacity-loaded});
+  transition: opacity #{$lazy-animation-duration};
+}
+
+
+.img-placeholder-bg,
+.field--type-image {
+  background-color: var(--lazy-placeholder-bg, #{$lazy-placeholder-bg}) ;
+}
+
+
+:root  {
+  --lazy-placeholder-bg : #{$lazy-placeholder-bg};
+  --lazy-opacity-loaded : #{$lazy-opacity-loaded};
+}
+
+
+@if ($lazy-animation-opacity) {
+  .lazyload,
+  .lazyloading {
+    @include lazyinit()
+  }
+  
+  .loading,
+  .lazyloaded,
+  .image {
+    @include lazyend();
+  }
+  
+}

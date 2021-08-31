@@ -1,0 +1,55 @@
+/*--------------------------------------------------
+:: Toast
+--------------------------------------------------*/
+[data-drupal-messages] {
+    position: fixed;
+    width: calc(90vw - ( var(--container-gutter-x, 1rem) * 2) );
+    max-width: 50rem;
+    max-height: 80vh;
+    right:calc( var(--container-gutter-x, 1rem) / 2);
+    bottom:calc( var(--container-gutter-x, 1rem)  / 2);
+    .gin--vertical-toolbar & {
+      bottom:4rem;
+    }
+    margin:0;
+    z-index: 1000;
+    opacity: 1;
+    font-size: .85rem;
+    
+    .alert {
+        overflow-y: auto;
+        overflow-x: hidden;
+        transform: scale(0);
+        animation: popin .2s ease-out .5s 1 forwards;
+    }
+    
+    .alert + .alert {
+        animation-delay : .6s;
+    }
+    .alert + .alert + .alert {
+        animation-delay : .7s;
+    }
+    .alert + .alert + .alert + .alert {
+        animation-delay : .8s;
+    }
+    .alert + .alert + .alert + .alert + .alert {
+      animation-delay : .9s;
+    }
+    
+  }
+  
+  @keyframes popin {
+    0% {
+        transform: scale(0);
+    }
+  
+    80% {
+        transform: scale(1.12);
+    }
+  
+    100% {
+        transform: scale(1);
+    }
+  }
+  
+  

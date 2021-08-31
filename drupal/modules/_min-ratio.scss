@@ -1,0 +1,41 @@
+@use "sass:string";
+
+/*  ------------------------------------------------
+::
+::  RATIO MINIMUM DU BLOCK
+::  .selecteur {
+::     @include min-ratio('a4'); // ou 16x9, auto ...
+::   }
+::   
+--------------------------------------------------*/
+@mixin min-ratio($ratio) {
+
+  display: flex;
+
+  // calcul du padding top d'après ratio
+  &:after { 
+
+    $after-pt: unset;
+
+    // Uniformise la casse pour traitement
+    $ratio : string.to-lower-case($ratio);
+
+    @if $ratio == 'auto' {
+      $after-pt: unset;
+    } @else if $ratio == 'a4'{
+      $after-pt: (29.7 / 21) * 100%;
+    } @else {
+      // Transforme le ratio en liste
+      $list_ratio: str-split($ratio, 'x');
+      // RECUPERE la width et height,
+      // et la transforme en nombre pour calcul sass plutôt que css
+      $width: number(unquote( nth($list_ratio, 1) ));
+      $height: number(unquote( nth($list_ratio, 2) ));
+      
+      $after-pt:($height / $width) * 100%;
+    }
+    
+    content: "";
+    padding-top: $after-pt;
+  }
+}
