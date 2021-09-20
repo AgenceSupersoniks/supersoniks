@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @function rem($pxValue, $fsBase) {
-    @return #{stripUnit($pxValue) / stripUnit($fsBase)}rem;
+    @return #{math.div(stripUnit($pxValue), stripUnit($fsBase))}rem;
 }
