@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "tocssvar.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/AgenceSupersoniks/supersoniks.git",
