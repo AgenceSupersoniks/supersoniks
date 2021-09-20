@@ -1,6 +1,6 @@
 # Installation
 ```
-ssks yarn add @ssks/duotone
+ssks yarn add @supersoniks/duotone
 ```
 # Init
 
