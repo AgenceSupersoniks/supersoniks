@@ -5,7 +5,7 @@ ssks yarn add @supersoniks/duotone
 # Init
 
 ```js
-import Duotone from 'duotone';
+import Duotone from '@supersoniks/duotone';
 const duotone = new Duotone({
   filters: [
     {
