@@ -24,7 +24,7 @@
     @if $ratio == 'auto' {
       $after-pt: unset;
     } @else if $ratio == 'a4'{
-      $after-pt: (29.7 / 21) * 100%;
+      $after-pt: math.div(29.7, 21) * 100%;
     } @else {
       // Transforme le ratio en liste
       $list_ratio: str-split($ratio, 'x');
