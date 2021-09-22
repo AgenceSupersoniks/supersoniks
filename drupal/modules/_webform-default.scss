@@ -42,10 +42,28 @@ $form-bp: sm !default;
     [class*=form-type-select] ,
     [class*=form-type-textarea] ,
     [class*=form-type-checkboxes] ,
+    [class*=form-checkboxes] ,
     [class*=form-type-radios] {
       grid-column-end: span 2; 
     }
   }
+  
+  [class*=form-checkboxes] > .form-item,
+  .js-form-type-checkbox {
+    display: flex;
+    align-items: flex-start;
+
+    input {
+      flex-shrink: 0;
+      margin-right: .5em;
+      margin-top: 0.15em;
+    }
+
+    label {
+      line-height: 1.25;
+    }
+  }
+
   
   [class*="form-item-rgpd"] {
     grid-column-end: span 2; 
