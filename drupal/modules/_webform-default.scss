@@ -64,6 +64,9 @@ $form-bp: sm !default;
     }
   }
 
+  .js-form-type-checkbox + .js-form-type-checkbox {
+    margin-top: .6em;
+  }
   
   [class*="form-item-rgpd"] {
     grid-column-end: span 2; 
