@@ -1,6 +1,6 @@
 {
   "name": "@supersoniks/drupal",
-  "version": "1.0.7",
+  "version": "1.0.71",
   "description": "",
   "sass": "index.scss",
   "publishConfig": {

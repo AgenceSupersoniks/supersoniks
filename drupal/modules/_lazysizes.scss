@@ -35,6 +35,10 @@ $lazy-animation-duration: var(--lazy-animation-duration,  0.2s ) !default;
 }
 
 
+// DEBUG DES TAILLES d'images
+// automatique
+img[data-sizes="auto"] { display: block; width: 100%; }
+
 @if ($lazy-animation-opacity) {
   .lazyload,
   .lazyloading {
