@@ -1,22 +1,61 @@
 class DateFilter {
   constructor(params) {
+    this.defaultLibs = this.defaultLibs();
+    this.defaultOptions = this.defaultOptions();
     this.init(params);
   }
-
+  
   /* -------------------------------------------------------------------------- */
   /*                                    INIT                                    */
   /* -------------------------------------------------------------------------- */
-  init(params) {
+  defaultLibs() {
+    const libs = {
+      fr: {
+        toutes_les_dates: "Toutes les dates",
+        toutes_les_periodes: "Toutes les périodes",
+      },
+      en: {
+        toutes_les_dates: "All dates",
+        toutes_les_periodes: "All periods",
+      },
+    }
+    return libs;
+  }
+
+  defaultOptions() {
+    const options = {
+      // Mandatory
+      list: '',
+      listItems: '',
+      insertContainer: '',
+      // Optional
+      insertPosition: 'beforeend',
+      filterBy: 'month',
+      groupBy :  '',
+      filter: {
+        id: 'ssks-date-filter',
+        class: '',
+        wrapperClass: '',
+        textDisplay: ['month', 'year'],
+        defaultText: this.getLib('toutes_les_periodes'),
+        groupTextDisplay: '',
+      }
+    }
+    return options;
+  }
+
+  init(options) {
+
+    const params = this.deepMergeObj(this.defaultOptions, options)
+
     this.isInitialized = false;
     this.params = params || {};
 
     // options
     this.filterBy = this.params.filterBy;
-    this.filterTextDisplay = this.params.filterTextDisplay || 'month';
     this.groupBy = this.params.groupBy;
-    this.groupTextDisplay = this.params.groupTextDisplay;
     this.insertContainer = document.querySelector(this.params.insertContainer);
-    this.insertPosition = this.params.insertPosition || 'beforeend';
+    this.insertPosition = this.params.insertPosition;
 
     // list
     this.list = document.querySelector(this.params.list);
@@ -24,26 +63,27 @@ class DateFilter {
 
     // dates
     this.dates = {
-      all : [],
-      uniques : [],
-      groupUniques : [],
+      all: [],
+      uniques: [],
+      groupUniques: [],
     }
-    
+
     // filter
     this.filter = {
-      isInitialized : false,
-      id : 'ssks-date-filter',
-      el : null,
-      class : this.params.filter.class || '',
-      wrapperClass : this.params.filter.wrapperClass || "",
+      isInitialized: false,
+      id: this.params.filter.id,
+      el: null,
+      class: this.params.filter.class,
+      wrapperClass: this.params.filter.wrapperClass,
+      textDisplay: this.params.filter.textDisplay,
+      groupTextDisplay: this.params.filter.groupTextDisplay,
     }
-    
+
     // anchors
-    
+
     // Build
     this.build_dates(this.listItems);
     this.build_filter();
-    // this.init_on_mutate();
   }
 
 
@@ -59,7 +99,28 @@ class DateFilter {
       }
     });
   }
+  
+  deepMergeObj(t, s) {
+    const o = Object;
+    const a = o.assign; 
+    const clone_t = {...t};
 
+    for (const k of o.keys(s)) {
+      if (s[k] instanceof o) {
+        a(s[k], this.deepMergeObj(clone_t[k], s[k])); 
+      } 
+    }
+    return a(clone_t || {}, s), clone_t
+  }
+
+  getLib(lib, lang) {
+    const currentLang = lang || document.documentElement.getAttribute('lang');
+    if (this.defaultLibs[currentLang]) {
+      return this.defaultLibs[currentLang][lib] || "";
+    } else {
+      return '';
+    }
+  }
 
   /* -------------------------------------------------------------------------- */
   /*                                    DATES                                   */
@@ -79,12 +140,12 @@ class DateFilter {
       dates_all.push(date);
       item.dataset.dateFilterAnchorId = date.id;
     });
-  
+
     this.dates.all = dates_all;
     this.dates.uniques = this.get_datesUniques(this.filterBy);
     this.dates.groupUniques = this.get_datesUniques(this.groupBy);
   }
-  
+
   update_dates() {
     this.listItems = document.querySelectorAll(this.params.listItems);
     this.build_dates(this.listItems);
@@ -129,14 +190,14 @@ class DateFilter {
     // const dates = this.dates.uniques;
     const filterOptions = [];
     const defaultOption = `<option value="all">Toutes les dates</option>`;
-    
+
     // default option
     filterOptions.push(defaultOption);
-    
+
     // Generated options
     this.dates.uniques.forEach(date => {
       // Build option value
-      const optionValue = this.filterTextDisplay.map(key => {
+      const optionValue = this.filter.textDisplay.map(key => {
         if (date[key]) return date[key];
       }).join(' ');
       // Generate option
@@ -149,58 +210,18 @@ class DateFilter {
       filterOptions.push(option);
     });
 
-    // const groups = [];
-    // this.dates.groupUniques.forEach(group => {
-    //   const optgroup = document.createElement('optgroup');
-    //   optgroup.setAttribute('label', group[this.groupBy]);
-
-    //   let sameGroup = true;
-    //   this.dates.uniques.forEach(date => {
-    //     if (group[this.groupBy] !== date[this.groupBy]) {
-    //       sameGroup = false;
-    //     }
-
-    //     if (sameGroup) {
-    //       console.log(date);
-    //       // Build option value
-    //       const optionValue = params.filterTextDisplay.map(key => {
-    //         if (date[key]) return date[key];
-    //       }).join(' ');
-    //       // Generate option
-    //       const option = /*html*/ `
-    //         <option value="${date.id}">
-    //           ${optionValue}
-    //         </option>
-    //       `;
-    //       // Add to options
-    //       optgroup.insertAdjacentHTML('beforeend', option);
-    //     }
-    //   });
-
-    //   // const optgroup = /*html*/ `
-    //   //   <optgroup label="${date[this.groupBy]}">
-        
-    //   //   </optgroup>
-    //   // `;
-    //   groups.push(optgroup);
-      
-    // });
-    
-    // filter.append(...groups);
-    // console.log(groups);
-
     // // Add options to filter
     filter.innerHTML = filterOptions.join(' ');
   }
- 
-  
+
+
   /* -------------------------------------------------------------------------- */
   /*                                   ANCHORS                                  */
   /* -------------------------------------------------------------------------- */
   build_anchors() {
     // Remove anchors
     document.querySelectorAll('[data-date-filter-anchor-item]').forEach(el => el.remove())
-    
+
     // Create anchors
     this.dates.uniques.forEach(date => {
       const id = date.id;
@@ -218,44 +239,6 @@ class DateFilter {
 
 
   /* -------------------------------------------------------------------------- */
-  /*                                  EVENT WIP                                 */
-  /* -------------------------------------------------------------------------- */
-  is_listItem(el) {
-    const arr = Array.from(this.listItems);
-    return arr.includes(el);
-  }
-
-  init_on_mutate() {
-    if (!this.list) return;
-    let targetNode = this.list.parentElement;
-    console.log(targetNode);
-
-    let config = { childList: true, subtree: true };
-    let requestIdCounter = 0; 
-    let callback = mutationsList => {
-
-      for(let mutation of mutationsList) {
-        console.log(mutation.target, this.list, mutation.target == this.list);
-        if (this.is_listItem(mutation.target) && mutation.addedNodes.length == 0) {
-              requestIdCounter++;
-              let requestId = requestIdCounter;
-              requestAnimationFrame(()=> {
-                  if(requestId!=requestIdCounter)return;
-                  console.log('plop');
-                  // this.update();
-              });
-          }
-      }
-    };
-    
-    // Créé une instance de l'observateur lié à la fonction de callback
-    let observer = new MutationObserver(callback);
-
-    observer.observe(targetNode, config);
-  }
-  
-
-  /* -------------------------------------------------------------------------- */
   /*                                   UPDATES                                  */
   /* -------------------------------------------------------------------------- */
   update() {
@@ -264,7 +247,7 @@ class DateFilter {
     this.update_filter();
     this.update_anchors();
   }
-  
+
 }
 
 export default DateFilter;
