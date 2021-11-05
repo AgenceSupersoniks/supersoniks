@@ -1,5 +1,5 @@
 {
-  "name": "datefilter",
+  "name": "@supersoniks/datefilter",
   "version": "1.0.0",
   "description": "",
   "main": "DateFilter.js",
