@@ -76,6 +76,7 @@ class DateFilter {
       class: this.params.filter.class,
       wrapperClass: this.params.filter.wrapperClass,
       textDisplay: this.params.filter.textDisplay,
+      defaultText: this.params.filter.defaultText,
       groupTextDisplay: this.params.filter.groupTextDisplay,
     }
 
@@ -189,7 +190,7 @@ class DateFilter {
     const filter = this.filter.el;
     // const dates = this.dates.uniques;
     const filterOptions = [];
-    const defaultOption = `<option value="all">Toutes les dates</option>`;
+    const defaultOption = `<option value="all">${this.filter.defaultText}</option>`;
 
     // default option
     filterOptions.push(defaultOption);
