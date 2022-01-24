@@ -1,5 +1,5 @@
 $enable-weform-default: true !default;
-$form-max-width: 80ch !default;
+$form-max-width: 65ch !default;
 $form-grid-template-columns: var(--form-grid-template-colums, 1fr 1fr )  !default;
 $form-grid-gap: var(--gutter-x) !default;
 $form-bp: sm !default;
