@@ -27,7 +27,8 @@ $form-bp: sm !default;
     fieldset div:not([class]){
     div[id*=ajax-wrapper] {
         display:contents;
-        grid-column-end: span 2; // support display contents
+        grid-column: 1 / -1;
+        // support display contents
     }
   }
 
@@ -44,7 +45,7 @@ $form-bp: sm !default;
     [class*=form-type-checkboxes] ,
     [class*=form-checkboxes] ,
     [class*=form-type-radios] {
-      grid-column-end: span 2; 
+      grid-column: 1 / -1;
     }
   }
   
@@ -69,15 +70,14 @@ $form-bp: sm !default;
   }
   
   [class*="form-item-rgpd"] {
-    grid-column-end: span 2; 
-
+    grid-column: 1 / -1;
     p {
       margin-bottom: 0;
     }
   }
 
   .rgpd-mentions {
-    grid-column-end: span 2; 
+    grid-column: 1 / -1;
   }
 
   .captcha  {
