@@ -1,62 +1,86 @@
 $enable-weform-default: true !default;
 $form-max-width: 65ch !default;
-$form-grid-template-columns: var(--form-grid-template-colums, 1fr 1fr )  !default;
+$form-grid-template-columns: var(--form-grid-template-colums, 1fr 1fr) !default;
 $form-grid-gap: var(--gutter-x) !default;
 $form-bp: sm !default;
 
-@mixin webform-default($template-columns: $form-grid-template-columns, $gap: $form-grid-gap, $max-width: $form-max-width, $bp: $form-bp) {
-  margin-bottom :4rem;
+@mixin webform-default(
+  $template-columns: $form-grid-template-columns,
+  $gap: $form-grid-gap,
+  $max-width: $form-max-width,
+  $bp: $form-bp
+) {
+  margin-bottom: 4rem;
   max-width: $max-width;
 
   // Layout en grid pour fieldset
   // et formulaire sans fieldset
-  &, 
-  & .fieldset-wrapper{
+  &,
+  & .fieldset-wrapper {
     display: grid;
     grid-gap: $gap;
 
-    @include media-breakpoint-up($form-bp){
-      grid-template-columns: $template-columns ;
+    @include media-breakpoint-up($form-bp) {
+      grid-template-columns: $template-columns;
     }
-
   }
 
   // Ignore grid layout pour les wrapper ajax
   // TODO : verifier usage dans drupal 9
-  &, 
-    fieldset div:not([class]){
-    div[id*=ajax-wrapper] {
-        display:contents;
-        grid-column: 1 / -1;
-        // support display contents
+  &,
+  fieldset div:not([class]) {
+    .form-type-email-confirm,
+    .form-type-password-confirm,
+    div[id*="ajax-wrapper"] {
+      display: contents;
+      grid-column: 1 / -1;
+      // support display contents
     }
   }
 
   // Elements sur deux colonnes
-  & , 
-  & fieldset{
+  &,
+  & fieldset {
+    .password-suggestions,
     fieldset,
-    [class*=form-actions] ,
-    [class*=form-type-multiple-file] ,
-    [class*=form-type-file] ,
-    [class*=form-type-markup] ,
-    [class*=form-type-select] ,
-    [class*=form-type-textarea] ,
-    [class*=form-type-checkboxes] ,
-    [class*=form-checkboxes] ,
-    [class*=form-type-radios] {
+    [class*="form-actions"],
+    [class*="form-type-multiple-file"],
+    [class*="form-type-file"],
+    [class*="form-type-markup"],
+    [class*="form-type-select"],
+    [class*="form-type-textarea"],
+    [class*="form-type-checkboxes"],
+    [class*="form-checkboxes"],
+    [class*="form-type-radios"] {
       grid-column: 1 / -1;
     }
   }
-  
-  [class*=form-checkboxes] > .form-item,
+
+  .form-type-email-confirm .form-item:first-child,
+  .form-type-password-confirm .form-item:first-child {
+    grid-column: 1;
+  }
+
+  .password-strength__meter {
+    height: 0.35rem;
+    margin: 0.25rem 0;
+  }
+
+  .password-suggestions {
+    grid-column: 1 / -1;
+    font-size: 0.75rem;
+    padding: 0.5rem 0 0;
+    border-top: 2px dotted;
+  }
+
+  [class*="form-checkboxes"] > .form-item,
   .js-form-type-checkbox {
     display: flex;
     align-items: flex-start;
 
     input {
       flex-shrink: 0;
-      margin-right: .5em;
+      margin-right: 0.5em;
       margin-top: 0.15em;
     }
 
@@ -66,9 +90,9 @@ $form-bp: sm !default;
   }
 
   .js-form-type-checkbox + .js-form-type-checkbox {
-    margin-top: .6em;
+    margin-top: 0.6em;
   }
-  
+
   [class*="form-item-rgpd"] {
     grid-column: 1 / -1;
     p {
@@ -80,28 +104,27 @@ $form-bp: sm !default;
     grid-column: 1 / -1;
   }
 
-  .captcha  {
-    grid-column-start:1; 
-    font-size: .8rem;
+  .captcha {
+    grid-column-start: 1;
+    font-size: 0.8rem;
     summary {
       font-weight: bold;
       line-height: $line-height-sm;
     }
     .form-item-captcha-response {
       font-size: 1rem;
-      margin-top: .4rem;
+      margin-top: 0.4rem;
     }
     .description {
-      margin-top: .1rem;
-      font-size: .8rem;
+      margin-top: 0.1rem;
+      font-size: 0.8rem;
       line-height: $line-height-sm;
     }
   }
-
 }
 
 // APPLIQUE les styles par défaut à tous les webforms
-@if $enable-weform-default{
+@if $enable-weform-default {
   .ssks-submission-form,
   .webform-submission-form {
     @include webform-default();
