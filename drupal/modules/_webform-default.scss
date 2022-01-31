@@ -69,8 +69,6 @@ $form-bp: sm !default;
   .password-suggestions {
     grid-column: 1 / -1;
     font-size: 0.75rem;
-    padding: 0.5rem 0 0;
-    border-top: 2px dotted;
   }
 
   [class*="form-checkboxes"] > .form-item,
@@ -121,6 +119,15 @@ $form-bp: sm !default;
       line-height: $line-height-sm;
     }
   }
+
+  .password-confirm,
+  .password-strength__title, 
+  .description {
+    opacity: .6;
+    font-size: .8em;
+    margin-top: .25rem;
+  }
+
 }
 
 // APPLIQUE les styles par défaut à tous les webforms
