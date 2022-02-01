@@ -80,11 +80,12 @@ class DateFilter {
       groupTextDisplay: this.params.filter.groupTextDisplay,
     }
 
-    // anchors
-
     // Build
+    if (!this.insertContainer) return;
     this.build_dates(this.listItems);
     this.build_filter();
+    this.build_anchors();
+
   }
 
 
@@ -144,7 +145,7 @@ class DateFilter {
 
     this.dates.all = dates_all;
     this.dates.uniques = this.get_datesUniques(this.filterBy);
-    this.dates.groupUniques = this.get_datesUniques(this.groupBy);
+    // this.dates.groupUniques = this.get_datesUniques(this.groupBy);
   }
 
   update_dates() {
@@ -220,6 +221,7 @@ class DateFilter {
   /*                                   ANCHORS                                  */
   /* -------------------------------------------------------------------------- */
   build_anchors() {
+    
     // Remove anchors
     document.querySelectorAll('[data-date-filter-anchor-item]').forEach(el => el.remove())
 
