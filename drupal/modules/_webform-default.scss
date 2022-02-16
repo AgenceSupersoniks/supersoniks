@@ -31,6 +31,7 @@ $form-bp: sm !default;
   fieldset div:not([class]) {
     .form-type-email-confirm,
     .form-type-password-confirm,
+    .form-ajax-wrapper,
     div[id*="ajax-wrapper"] {
       display: contents;
       grid-column: 1 / -1;
@@ -129,11 +130,35 @@ $form-bp: sm !default;
     margin-top: .25rem;
   }
 
+
+  // CAPTCHA
+  .captcha-admin-links {
+    grid-column: 1 / -1;
+    background: #fcd34d;
+    font-size: .7rem;
+    border-radius: 0.5rem;
+    color: #0f172a;
+    padding: .5rem 1rem;
+    summary {
+      font-size: .85rem;
+    }
+    a {
+      color: inherit;
+    }
+  }
 }
+
+// DESACTIVE LA SUGGESTION DE CAPTCHA 
+// POUR LES FORMULAIRE views
+.views-exposed-form .captcha-admin-links {
+  display:none !important;
+}
+
 
 // APPLIQUE les styles par défaut à tous les webforms
 @if $enable-weform-default {
-  .ssks-submission-form,
+  form.ssks-submission-form,
+  .ssks-submission-form > form,
   .webform-submission-form {
     @include webform-default();
   }
