@@ -38,3 +38,14 @@
   }
 
 }
+
+.show-credits,
+.show-credits-absolute{
+  --credit-wrapper-position:relative;
+  position: var(--credit-wrapper-position);
+  @include affiche-credits(absolute);
+}
+
+.show-credits-static{
+  @include affiche-credits(static);
+}
