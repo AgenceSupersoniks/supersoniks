@@ -74,5 +74,4 @@ export {
   rgbToArray,
   colorToArray,
   convertToDuoToneMatrix,
-  setProperty,
 };

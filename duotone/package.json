@@ -1,6 +1,6 @@
 {
   "name": "@supersoniks/duotone",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Generate a duotone filter svg ",
   "main": "Duotone.js",
   "publishConfig": {
