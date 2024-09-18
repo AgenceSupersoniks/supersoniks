@@ -1,4 +1,4 @@
-import {setProperty, colorToArray, convertToDuoToneMatrix} from './utils';
+import { setProperty, colorToArray, convertToDuoToneMatrix } from './utils';
 
 
 class Duotone {
@@ -6,7 +6,7 @@ class Duotone {
     this.init = this.init(options);
     this.isInitialized = false;
   }
-  
+
   init(options = {}) {
     if (this.isInitialized) return;
     this.isInitialized = true;
@@ -57,12 +57,12 @@ class Duotone {
     const dark = filter.dark;
     const light = filter.light;
     const rootStyle = filter.rootStyle || this.rootStyle;
-    
+
     // set color matrix
     const colorLight = colorToArray(light, rootStyle);
     const colorDark = colorToArray(dark, rootStyle);
     const matrix = convertToDuoToneMatrix(colorLight, colorDark);
-    
+
     // generate filter
     const generatedFilter = `<filter id="${id}">
                               <feColorMatrix type="matrix" values="${matrix}"/></filter>
@@ -89,7 +89,7 @@ class Duotone {
         return
       }
     });
-    
+
     // otherwise add it to the array
     if (!is_filter_in_array) {
       this.filters.push(filter);
@@ -99,19 +99,29 @@ class Duotone {
     this.buildFilters();
   }
 
+  getStylesheetByTitle(title) {
+    const stylesheets = Array.from(document.styleSheets).filter(sheet => sheet.title === title);
+    return stylesheets.length > 0 ? stylesheets[0] : null;
+  }
   updateStyleSheet() {
-    
+
     if (this.generateStyleSheet) {
 
-      if (document.styleSheets.length < 1) {
+      const duotoneStyleSheet = document.getElementById('ssksDuotoneStyleTag');
+
+      if (!duotoneStyleSheet) {
         let sheet = document.createElement('style');
+        sheet.id = 'ssksDuotoneStyleTag';
+        sheet.title = 'ssksDuotoneStyleTag';
         document.querySelector('head').appendChild(sheet);
       }
-      let styleSheet = document.styleSheets[document.styleSheets.length - 1];
-
-      this.filters.forEach(filter => {
-        styleSheet.insertRule(`[data-duotone="${filter.id}"] {filter: url(#${filter.id})} `, styleSheet.cssRules.length);
-      });
+      // filter get stylesheet with title  ssksDuotoneStyleTag
+      let styleSheet = this.getStylesheetByTitle('ssksDuotoneStyleTag');
+      if (styleSheet) {
+        this.filters.forEach(filter => {
+          styleSheet.insertRule(`[data-duotone="${filter.id}"] {filter: url(#${filter.id})} `, styleSheet.cssRules.length);
+        });
+      }
 
     }
   }
